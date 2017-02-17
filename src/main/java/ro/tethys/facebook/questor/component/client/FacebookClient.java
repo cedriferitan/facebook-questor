@@ -43,6 +43,7 @@ public class FacebookClient implements Component {
 		Connection<Page> first = fbClient.fetchConnection("search", Page.class,
 				Parameter.with("q", "musician/band"),
 				Parameter.with("type", "page"),
+				Parameter.with("limit", "1000"),
 				Parameter.with("fields", "fan_count, location, emails"));
 
 		List<Page> data = first.getData();
