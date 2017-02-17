@@ -8,10 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import ro.tethys.facebook.questor.component.Component;
 import ro.tethys.facebook.questor.component.akka.AkkaSystem;
+import ro.tethys.facebook.questor.component.client.FacebookClient;
 import ro.tethys.facebook.questor.component.http.HttpServerSupport;
 import ro.tethys.facebook.questor.component.rest.Apidoc;
 import ro.tethys.facebook.questor.component.rest.RestServer;
 import ro.tethys.facebook.questor.properties.AppProperties;
+import ro.tethys.facebook.questor.properties.FacebookClientProperties;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -26,6 +28,7 @@ public class App {
 
 	private static HttpServer httpServer;
 	private static AppProperties properties;
+	private static FacebookClientProperties facebookClientProperties;
 
 	private static LinkedList<Component> components = new LinkedList<>();
 
@@ -35,6 +38,7 @@ public class App {
 		components.add(new HttpServerSupport());
 		components.add(new RestServer());
 		components.add(new Apidoc());
+		components.add(new FacebookClient());
 	}
 
 	private App() {
@@ -54,6 +58,10 @@ public class App {
 
 	public static void setHttpServer(HttpServer httpServer) {
 		App.httpServer = httpServer;
+	}
+
+	public static FacebookClientProperties getFacebookClientProperties() {
+		return facebookClientProperties;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -102,6 +110,8 @@ public class App {
 	private static void initializeProperties() {
 		properties = new AppProperties();
 		properties.initializeProperties();
+		facebookClientProperties = new FacebookClientProperties();
+		facebookClientProperties.initializeProperties();
 	}
 
 	private static void overrideModelConverterSwagger() {

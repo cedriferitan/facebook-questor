@@ -154,6 +154,12 @@
 			<artifactId>jersey-test-framework-provider-grizzly2</artifactId>
 			<version>2.23.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.restfb/restfb -->
+		<dependency>
+			<groupId>com.restfb</groupId>
+			<artifactId>restfb</artifactId>
+			<version>1.36.0</version>
+		</dependency>
 
 		<!--TODO-->
 		<!--<dependency>
