@@ -1,241 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>ro.tethys.facebook.questor</groupId>
-	<artifactId>facebook-questor</artifactId>
-	<version>1.0-SNAPSHOT</version>
+    <groupId>ro.tethys.facebook.questor</groupId>
+    <artifactId>facebook-questor</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-	<properties>
-		<maven.shade.plugin>2.3</maven.shade.plugin>
-		<jdeb.version>1.4</jdeb.version>
-		<maven.release.plugin.version>2.5.1</maven.release.plugin.version>
-		<maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
+    <properties>
+        <maven.shade.plugin>2.3</maven.shade.plugin>
+        <jdeb.version>1.4</jdeb.version>
+        <maven.release.plugin.version>2.5.1</maven.release.plugin.version>
+        <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
 
-		<drta.deb.mainClass>com.oneandone.drta.cams.action.provider.internal.App</drta.deb.mainClass>
-		<drta.deb.bindPort>8080</drta.deb.bindPort>
-		<drta.deb.startDaemon>0</drta.deb.startDaemon>
+        <drta.deb.mainClass>ro.tethys.facebook.questor.App</drta.deb.mainClass>
+        <drta.deb.startDaemon>0</drta.deb.startDaemon>
 
-		<!-- Maven exec plugin -->
-		<exec.mainClass>${drta.deb.mainClass}</exec.mainClass>
+        <!-- Maven exec plugin -->
+        <exec.mainClass>${drta.deb.mainClass}</exec.mainClass>
+        <slf4j.api.version>1.7.5</slf4j.api.version>
+    </properties>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.restfb/restfb -->
+        <dependency>
+            <groupId>com.restfb</groupId>
+            <artifactId>restfb</artifactId>
+            <version>1.36.0</version>
+        </dependency>
 
-		<slf4j.api.version>1.7.5</slf4j.api.version>
-		<grizzly.version>2.3.16</grizzly.version>
-		<jersey2.version>2.23.1</jersey2.version>
-		<servlet.api.version>3.0.1</servlet.api.version>
-		<swagger-version>1.3.1</swagger-version>
-	</properties>
+        <!-- LOGGING -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.api.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.api.version}</version>
+        </dependency>
+    </dependencies>
 
-	<dependencies>
-		<!--internal dependencies -->
-		<!--TODO uncomment if needed-->
-		<!--<dependency>
-			<groupId>com.oneandone.drta.libs</groupId>
-			<artifactId>cams-input-entities</artifactId>
-			<version>1.11.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oneandone.drta.libs</groupId>
-			<artifactId>cams-transport-entities</artifactId>
-			<version>1.11.0-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>log4j-over-slf4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-classic</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.fusesource</groupId>
-					<artifactId>sigar</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>jcl-over-slf4j</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>-->
-		<dependency>
-			<groupId>org.glassfish.grizzly</groupId>
-			<artifactId>grizzly-http-server</artifactId>
-			<version>${grizzly.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>${jersey2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-grizzly2-http</artifactId>
-			<version>${jersey2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-grizzly2-servlet</artifactId>
-			<version>2.23.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${servlet.api.version}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
-		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>2.2.3</version>
-		</dependency>
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profile.id>local</profile.id>
+                <drta.deb.startDaemon>1</drta.deb.startDaemon>
+            </properties>
+        </profile>
+    </profiles>
 
-		<!--This is necessary for client TLS/SSL-->
-		<!--<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.1</version>
-		</dependency>-->
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.7.4</version>
-		</dependency>
-
-		<!--TODO: see if needed-->
-		<!--<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.7.4</version>
-		</dependency>-->
-
-		<!--tests -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-module-junit4</artifactId>
-			<version>1.6.5</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-api-mockito</artifactId>
-			<version>1.6.5</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.typesafe.akka</groupId>
-			<artifactId>akka-testkit_2.10</artifactId>
-			<version>2.3.15</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jettison</groupId>
-			<artifactId>jettison</artifactId>
-			<version>1.3.7</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.test-framework.providers</groupId>
-			<artifactId>jersey-test-framework-provider-grizzly2</artifactId>
-			<version>2.23.1</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.restfb/restfb -->
-		<dependency>
-			<groupId>com.restfb</groupId>
-			<artifactId>restfb</artifactId>
-			<version>1.36.0</version>
-		</dependency>
-
-		<!--TODO-->
-		<!--<dependency>
-			<groupId>com.owlike</groupId>
-			<artifactId>genson</artifactId>
-			<version>1.4</version>
-			<scope>test</scope>
-		</dependency>-->
-
-
-		<!-- LOGGING -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.api.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jul-to-slf4j</artifactId>
-			<version>${slf4j.api.version}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.api.version}</version>
-		</dependency>
-		<!--SWAGGER-->
-		<dependency>
-			<groupId>com.wordnik</groupId>
-			<artifactId>swagger-jaxrs_2.10</artifactId>
-			<version>${swagger-version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.ws.rs</groupId>
-					<artifactId>jsr311-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<artifactId>javassist</artifactId>
-					<groupId>javassist</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>local</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<profile.id>local</profile.id>
-				<drta.deb.startDaemon>1</drta.deb.startDaemon>
-			</properties>
-		</profile>
-	</profiles>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
