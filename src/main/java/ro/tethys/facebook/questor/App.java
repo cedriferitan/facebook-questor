@@ -35,6 +35,8 @@ public class App {
         initializeProperties();
         initializeApplication();
         startApplication();
+
+        addShutdownHook();
     }
 
     /*
@@ -62,6 +64,14 @@ public class App {
 
     public static FacebookService getFacebookService() {
         return facebookService;
+    }
+
+    private static void addShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            csvService.getPw().close();
+            SLF4JBridgeHandler.uninstall();
+        }));
+
     }
 
     public static CsvService getCsvService() {
