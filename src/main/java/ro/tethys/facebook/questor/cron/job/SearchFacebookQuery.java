@@ -15,7 +15,7 @@ import java.util.List;
 
 
 public class SearchFacebookQuery implements Job {
-    public static final Logger LOG = LoggerFactory.getLogger(SearchFacebookQuery.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SearchFacebookQuery.class);
     private static String afterCursor;
     private FacebookService fbService = App.getFacebookService();
     private CsvService csvService = App.getCsvService();
