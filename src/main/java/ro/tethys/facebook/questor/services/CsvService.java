@@ -17,9 +17,6 @@ public class CsvService {
 
     public CsvService(String path) throws IOException {
         File file = new File(path);
-//        if (!file.exists()) {
-//            throw new IOException("File could not be created: " + path);
-//        }
 
         pw = new PrintWriter(file);
         sb = new StringBuilder();
@@ -38,7 +35,7 @@ public class CsvService {
             write(Long.toString(p.getLikes()));
             //
             write(p.getEmails());
-            write("\n", ' ');
+            write("", '\n');
         }
         pw.write(sb.toString());
     }

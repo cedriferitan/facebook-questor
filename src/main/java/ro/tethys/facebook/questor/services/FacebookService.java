@@ -5,6 +5,8 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.types.Page;
+import ro.tethys.facebook.questor.App;
+import ro.tethys.facebook.questor.properties.AppProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +16,12 @@ import static com.restfb.Parameter.with;
 import static com.restfb.Version.VERSION_2_8;
 
 public class FacebookService {
-    private static final int LIMIT = 100;
-    private static final String SEARCH_Q = "musician/band";
     private static final String PAGE = "page";
     private static final String FIELDS = "fan_count, location, emails";
     private final FacebookClient fbClient;
     private List<Parameter> parameterList;
+
+    private AppProperties props = App.getProperties();
 
     public FacebookService(String accessToken) {
         fbClient = new DefaultFacebookClient(accessToken, VERSION_2_8);
@@ -28,9 +30,9 @@ public class FacebookService {
 
     private void buildQueryParameters() {
         parameterList = new ArrayList<>();
-        parameterList.add(with("q", SEARCH_Q));
+        parameterList.add(with("q", props.searchQuery));
         parameterList.add(with("type", PAGE));
-        parameterList.add(with("limit", LIMIT));
+        parameterList.add(with("limit", props.queryLimit));
         parameterList.add(with("fields", FIELDS));
     }
 
@@ -47,8 +49,8 @@ public class FacebookService {
 
     public List<Page> filterByFanCount(List<Page> list) {
         return list.stream()
-                .filter(p -> p.getFanCount() > 1000
-                        && p.getFanCount() < 15000)
+                .filter(p -> p.getFanCount() > props.likesMin
+                        && p.getFanCount() < props.likesMax)
                 .collect(Collectors.toList());
     }
 }
