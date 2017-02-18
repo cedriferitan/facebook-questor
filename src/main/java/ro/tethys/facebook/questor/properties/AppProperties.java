@@ -6,21 +6,19 @@ package ro.tethys.facebook.questor.properties;
  */
 public class AppProperties extends GenericProperties {
 
-	@Mapping(name = "api.version")
-	public String apiVersion;
-	@Mapping(name = "api.address")
-	public String apiAddress;
-	@Mapping(name = "server.address")
-	public String serverAddress;
-	@Mapping(name = "server.port")
-	public Integer serverPort;
+    @Mapping(name = "fb.access.token")
+    public String fbAccessToken;
+    @Mapping(name = "cron.expression")
+    public String cronExpression;
+    @Mapping(name = "output.file")
+    public String outputFile;
 
-	public AppProperties() {
-		super();
-	}
+    public AppProperties() {
+        super();
+    }
 
-	@Override
-	public String getPropertiesFileName() {
-		return "application.properties";
-	}
+    @Override
+    public String getPropertiesFileName() {
+        return "application.properties";
+    }
 }

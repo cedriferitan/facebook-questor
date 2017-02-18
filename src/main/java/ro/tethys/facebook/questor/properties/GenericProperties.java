@@ -19,11 +19,12 @@ import static org.apache.commons.lang.StringUtils.isEmpty;
 public class GenericProperties {
 	private static final Logger LOG = LoggerFactory.getLogger(GenericProperties.class);
 
-	protected List nullableProperties;
+	private List nullableProperties;
 	protected Properties properties;
-	protected String propertiesFileName;
+	private String propertiesFileName;
 
-	public GenericProperties() {
+
+	GenericProperties() {
 		super();
 	}
 
@@ -31,7 +32,7 @@ public class GenericProperties {
 		return properties;
 	}
 
-	public List getNullableProperties() {
+	private List getNullableProperties() {
 		return nullableProperties;
 	}
 
