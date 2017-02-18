@@ -11,15 +11,15 @@ public class CsvService {
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char SPACE_SEPARATOR = ' ';
     private static final String FACEBOOK_URL = "www.facebook.com/";
-
+    private File file;
     private PrintWriter pw;
     private StringBuilder sb = new StringBuilder();
 
     public CsvService(String path) throws IOException {
         File file = new File(path);
-        if (!file.exists()) {
-            throw new IOException("File could not be created: " + path);
-        }
+//        if (!file.exists()) {
+//            throw new IOException("File could not be created: " + path);
+//        }
 
         pw = new PrintWriter(file);
         sb = new StringBuilder();
@@ -31,16 +31,19 @@ public class CsvService {
             //id
             writeUrl(p.getId());
             //country
-            write(p.getLocation().getCountry());
+            write(p.getLocation() != null ? p.getLocation().getCountry() : "");
             //city
-            write(p.getLocation().getCity());
+            write(p.getLocation() != null ? p.getLocation().getCity() : "");
             //likes
-            write(Long.toString(p.getFanCount()));
+            write(Long.toString(p.getLikes()));
             //
             write(p.getEmails());
+            write("\n", ' ');
         }
         pw.write(sb.toString());
-//        pw.close();
+    }
+
+    public void flush() {
         sb = new StringBuilder();
     }
 
@@ -65,9 +68,14 @@ public class CsvService {
 
     private void writeHeaders() {
         write("Page URL");
+        write("Name");
         write("Country");
         write("City");
         write("Likes");
         write("email", '\n');
+    }
+
+    public PrintWriter getPw() {
+        return pw;
     }
 }

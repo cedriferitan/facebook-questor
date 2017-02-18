@@ -34,13 +34,13 @@ public class App {
 
         initializeProperties();
         initializeApplication();
-        startApplication(args);
+        startApplication();
     }
 
     /*
      *	Private methods
      */
-    private static void startApplication(String[] args) throws Exception {
+    private static void startApplication() throws Exception {
         LOG.info("Starting application components");
 
         jobScheduler = new JobScheduler(new StdSchedulerFactory());
