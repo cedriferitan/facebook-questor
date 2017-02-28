@@ -47,7 +47,7 @@ public class SearchFacebookThread implements Runnable {
     }
 
     private int getRandomInterval() {
-//        return random.nextInt(40000) + 20000;
-        return random.nextInt(1000);
+        return random.nextInt(40000) + 20000;
+//        return random.nextInt(1000);
     }
 }
