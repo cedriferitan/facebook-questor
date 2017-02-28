@@ -27,7 +27,7 @@ public class CsvService {
             //id
             writeUrl(p.getId());
             //name
-            writeUrl(p.getName());
+            write(p.getName() != null ? p.getName() : "");
             //country
             write(p.getLocation() != null ? p.getLocation().getCountry() : "");
             //city
@@ -41,7 +41,7 @@ public class CsvService {
         pw.write(sb.toString());
     }
 
-    public void flush() {
+    public void flushStringBuilder() {
         sb = new StringBuilder();
     }
 
@@ -52,6 +52,9 @@ public class CsvService {
     }
 
     private StringBuilder write(String s) {
+        if (s != null && !s.isEmpty()) {
+            s = s.replace(",", ".");
+        }
         return write(s, ',');
     }
 

@@ -33,6 +33,7 @@ public class SearchFacebookThread implements Runnable {
             }
             getInformation();
         }
+        csvService.getPw().close();
         LOG.info("The cursor is {}", afterCursor);
     }
 
@@ -43,11 +44,11 @@ public class SearchFacebookThread implements Runnable {
         List<Page> pages = fbService.filterByFanCount(facebookPagesDetails.getData());
         csvService.writeToFile(pages);
         LOG.info("Wrote {} entries", pages.size());
-        csvService.flush();
+        csvService.flushStringBuilder();
     }
 
     private int getRandomInterval() {
-        return random.nextInt(40000) + 20000;
-//        return random.nextInt(1000);
+//        return random.nextInt(40000) + 20000;
+        return random.nextInt(1000);
     }
 }
