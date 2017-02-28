@@ -1,10 +1,9 @@
 package ro.tethys.facebook.questor;
 
-import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
-import ro.tethys.facebook.questor.cron.JobScheduler;
+import ro.tethys.facebook.questor.jobs.SearchFacebookThread;
 import ro.tethys.facebook.questor.properties.AppProperties;
 import ro.tethys.facebook.questor.services.CsvService;
 import ro.tethys.facebook.questor.services.FacebookService;
@@ -15,7 +14,7 @@ public class App {
     private static AppProperties properties;
     private static FacebookService facebookService;
     private static CsvService csvService;
-    private static JobScheduler jobScheduler;
+    private static SearchFacebookThread searchFacebookThreadJob;
 
     private App() {
         //hide implicit constructor
@@ -43,10 +42,9 @@ public class App {
      *	Private methods
      */
     private static void startApplication() throws Exception {
-        LOG.info("Starting application components");
-
-        jobScheduler = new JobScheduler(new StdSchedulerFactory());
-        jobScheduler.runScheduler();
+        LOG.info("Starting SearchFacebookThread");
+        Thread searchFacebookThread = new Thread(searchFacebookThreadJob);
+        searchFacebookThread.start();
 
         LOG.warn("Application started. Enjoy!");
     }
@@ -55,6 +53,7 @@ public class App {
         LOG.info("Initializing application components");
         facebookService = new FacebookService(properties.fbAccessToken);
         csvService = new CsvService(properties.outputFile);
+        searchFacebookThreadJob = new SearchFacebookThread();
     }
 
     private static void initializeProperties() {

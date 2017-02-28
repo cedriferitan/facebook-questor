@@ -11,7 +11,6 @@ public class CsvService {
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char SPACE_SEPARATOR = ' ';
     private static final String FACEBOOK_URL = "www.facebook.com/";
-    private File file;
     private PrintWriter pw;
     private StringBuilder sb = new StringBuilder();
 
@@ -27,6 +26,8 @@ public class CsvService {
         for (Page p : pages) {
             //id
             writeUrl(p.getId());
+            //name
+            writeUrl(p.getName());
             //country
             write(p.getLocation() != null ? p.getLocation().getCountry() : "");
             //city
@@ -69,7 +70,7 @@ public class CsvService {
         write("Country");
         write("City");
         write("Likes");
-        write("email", '\n');
+        write("Emails", '\n');
     }
 
     public PrintWriter getPw() {

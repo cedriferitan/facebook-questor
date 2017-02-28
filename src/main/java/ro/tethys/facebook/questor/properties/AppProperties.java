@@ -8,8 +8,6 @@ public class AppProperties extends GenericProperties {
 
     @Mapping(name = "fb.access.token")
     public String fbAccessToken;
-    @Mapping(name = "cron.expression")
-    public String cronExpression;
     @Mapping(name = "output.file")
     public String outputFile;
     //

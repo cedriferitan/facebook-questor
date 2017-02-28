@@ -17,7 +17,7 @@ import static com.restfb.Version.VERSION_2_8;
 
 public class FacebookService {
     private static final String PAGE = "page";
-    private static final String FIELDS = "fan_count, location, emails";
+    private static final String FIELDS = "name, fan_count, location, emails";
     private final FacebookClient fbClient;
     private List<Parameter> parameterList;
 
